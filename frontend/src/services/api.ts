@@ -1,0 +1,3 @@
+const BASE=import.meta.env.VITE_API_BASE_URL||'http://localhost:5000/api/v1';
+export class ApiError extends Error{constructor(public status:number,message:string){super(message)}}
+export async function api<T>(path:string,init?:RequestInit):Promise<T>{const response=await fetch(`${BASE}${path}`,{credentials:'include',headers:{'Content-Type':'application/json',...init?.headers},...init});if(!response.ok){const body=await response.json().catch(()=>null);throw new ApiError(response.status,body?.error?.message||'Something went wrong')}if(response.status===204)return undefined as T;const body=await response.json();return body.data as T}
