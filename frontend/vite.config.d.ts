@@ -1,7 +1,2 @@
-declare const _default: {
-    plugins: import("vite").Plugin<any>[][];
-    server: {
-        port: number;
-    };
-};
+declare const _default: import("vite").UserConfig;
 export default _default;
