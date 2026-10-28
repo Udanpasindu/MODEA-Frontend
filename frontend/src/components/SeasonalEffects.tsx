@@ -1,11 +1,13 @@
 import {useMemo} from 'react';
 
-export type SeasonalEffectType='snow'|'vesak'|'new-year'|'halloween'|'valentine'|'none';
+export type SeasonalEffectType='snow'|'vesak'|'vaisakhi'|'new-year'|'sinhala-tamil-new-year'|'halloween'|'valentine'|'none';
 
 const symbols:Record<Exclude<SeasonalEffectType,'none'>,string[]>={
   snow:['❄','❅','❆'],
   vesak:['🏮','✦','✧'],
+  vaisakhi:['🌾','☀','✦'],
   'new-year':['✦','★','●'],
+  'sinhala-tamil-new-year':['🌞','🌾','✿'],
   halloween:['🎃','🦇','👻'],
   valentine:['♥','♡','❤'],
 };

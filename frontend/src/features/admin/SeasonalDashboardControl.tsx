@@ -1,0 +1,10 @@
+import {useEffect,useState} from 'react';
+import {useMutation,useQuery,useQueryClient} from '@tanstack/react-query';
+import {Sparkles} from 'lucide-react';
+import {api} from '../../services/api';
+import type {SeasonalEffectType} from '../../components/SeasonalEffects';
+
+const choices:[SeasonalEffectType,string][]=[['snow','Christmas snow'],['vesak','Vesak lanterns'],['vaisakhi','Vaisakhi harvest'],['new-year','New Year sparkle'],['sinhala-tamil-new-year','Sinhala & Tamil New Year'],['valentine','Valentine hearts'],['halloween','Halloween']];
+type Effect={enabled:boolean;type:SeasonalEffectType;intensity:number};
+
+export function SeasonalDashboardControl(){const qc=useQueryClient();const {data}=useQuery({queryKey:['settings'],queryFn:()=>api<{seasonalEffect?:Effect}>('/admin/settings')});const [effect,setEffect]=useState<Effect>({enabled:false,type:'snow',intensity:2});useEffect(()=>{if(data?.seasonalEffect)setEffect(data.seasonalEffect)},[data]);const save=useMutation({mutationFn:(next:Effect)=>api('/admin/seasonal-effect',{method:'PATCH',body:JSON.stringify(next)}),onSuccess:()=>{qc.invalidateQueries({queryKey:['settings']});qc.invalidateQueries({queryKey:['public-settings']})}});const update=(next:Effect)=>{setEffect(next);save.mutate(next)};return <section className="admin-panel seasonal-dashboard"><div><p className="settings-kicker">Live storefront effect</p><h2><Sparkles/> Seasonal effects</h2><small>Enable an effect across the full customer website.</small></div><label>Effect<select value={effect.type} onChange={e=>update({...effect,type:e.target.value as SeasonalEffectType})}>{choices.map(([value,label])=><option value={value} key={value}>{label}</option>)}</select></label><label>Intensity<select value={effect.intensity} onChange={e=>update({...effect,intensity:Number(e.target.value)})}><option value="1">Light</option><option value="2">Medium</option><option value="3">Celebration</option></select></label><label className="effect-toggle"><input type="checkbox" checked={effect.enabled} onChange={e=>update({...effect,enabled:e.target.checked})}/><span>{effect.enabled?'Enabled':'Disabled'}</span></label></section>}
