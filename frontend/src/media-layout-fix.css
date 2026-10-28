@@ -1,0 +1,2 @@
+.hero>.hero-media{position:absolute;inset:0;left:0;top:0;transform:none!important;max-width:none;width:100%;height:100%;padding:0!important;z-index:0;color:inherit}.campaign>.campaign-media{padding:0!important;display:block}
+@media(max-width:900px){.hero>.hero-media{position:relative;inset:auto;left:auto;top:auto;width:100%;height:auto;transform:none!important;padding:0!important}}
