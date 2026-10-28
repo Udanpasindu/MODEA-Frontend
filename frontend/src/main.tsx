@@ -6,4 +6,5 @@ import './media-refresh.css';
 import './media-layout-fix.css';
 import './admin-filters.css';
 import './seasonal-admin.css';
+import './communication.css';
 const client=new QueryClient({defaultOptions:{queries:{staleTime:30_000,retry:1}}});ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><QueryClientProvider client={client}><CartProvider><RouterProvider router={router}/></CartProvider></QueryClientProvider></React.StrictMode>);
